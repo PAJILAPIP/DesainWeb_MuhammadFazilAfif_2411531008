@@ -69,7 +69,7 @@ self.addEventListener('fetch', (event) => {
           return response;
         }).catch(() => {
           // Jika fetch gagal dan tidak ada di cache, tampilkan offline page
-          return caches.match('/offline.html');
+          return caches.match('./offline.html');
         });
       })
   );
