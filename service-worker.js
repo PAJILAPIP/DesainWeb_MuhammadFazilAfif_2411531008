@@ -1,13 +1,13 @@
 const CACHE_NAME = 'Wesbsite';
 const urlsToCache = [
   './',
-  './index.html',
-  './contact.html',
-  './about.html',
-  './offline.html',
-  './style.css',
-  './android-chrome-192x192.png',
-  './android-chrome-512x512.png'
+  'index.html',
+  'contact.html',
+  'about.html',
+  'offline.html',
+  'style.css',
+  'android-chrome-192x192.png',
+  'android-chrome-512x512.png'
 ];
 
 // Install event - cache aset statis
