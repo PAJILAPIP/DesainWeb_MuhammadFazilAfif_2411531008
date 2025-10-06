@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Website Saya</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="android-chrome-512x512.png" type="image/png">
+    <link rel="apple-touch-icon" href="android-chrome-192x192.png">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="container-contact">
+        <h1>Contact Us</h1>
+
+    
+        <div class="contact-info">
+            <p>Silakan hubungi saya melalui informasi berikut:</p>
+            <p>Email: <a href="mailto:muhammadfazil2406@gmail.com">muhammadfazil2406@gmail.com</a></p>
+            <P>Nomor: 0812-7655-1700 atau <a href="https://wa.me/6281276551700"> WhatsApp</a></P>
+            <p>Instagram: <a href="https://instagram.com/muhammadfazilafif" target="_blank">@muhammadfazilafif</a></p>
+        </div>
+
+        <hr>
+
+        <h2>Kirim Pesan</h2>
+        <form onsubmit="handleSubmit(event)">
+            <label for="nama">Nama:</label>
+            <input type="text" id="nama" name="nama" placeholder="Masukkan nama Anda" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Masukkan email Anda" required>
+
+            <label for="kategori">Kategori Pesan:</label>
+            <select id="kategori" name="kategori" required>
+                <option value="">-- Pilih kategori --</option>
+                <option value="pertanyaan">Pertanyaan</option>
+                <option value="saran">Saran</option>
+                <option value="masalah">Masalah</option>
+            </select>
+
+            <label for="pesan">Pesan:</label>
+            <textarea id="pesan" name="pesan" rows="5" placeholder="Tulis pesan Anda..." required></textarea>
+
+            <div class="radio-group">
+                <label>Apakah ingin menerima balasan?</label><br>
+                <div class="radio-options">
+                    <label>
+                        <input type="radio" name="balasan" id="ya" value="ya">
+                        <span>Ya</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="balasan" id="tidak" value="tidak">
+                        <span>Tidak</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit">Kirim</button>
+        </form>
+    </div>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert("Form berhasil dikirim!");
+        }
+    </script>
+</body>
+</html>

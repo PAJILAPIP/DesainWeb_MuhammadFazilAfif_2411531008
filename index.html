@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="android-chrome-512x512.png" type="image/png">
+    <link rel="apple-touch-icon" href="android-chrome-192x192.png">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+    <div class="container-home-judul">
+        <h1>Selamat Datang di Website Saya</h1>
+    </div>
+    <div class="container-home-isi">
+        <judul>🚀 Progresive web app</judul><br>
+        <p>Website ini telah dikembangkan menjadi 
+            Progressive Web App (PWA), yaitu teknologi web modern yang 
+            memungkinkan situs ini berfungsi seperti aplikasi mobile.</p>
+        <div class="container-home-isi-1">
+            <p>📱 Installable</p>
+            <p>Aplikasi ini dapat diinstall di perangkat Anda seperti aplikasi native.</p>
+        </div>
+        <div class="container-home-isi-1">
+            <p>🔌 Offline Mode</p>
+            <p>Dengan service worker, website dapat diakses bahkan ketika offline.</p>
+        </div>
+        <div class="container-home-isi-1">
+            <p>⚡ Fast Loading</p>
+            <p>Pemuatan halaman yang lebih cepat dengan strategi caching.</p>
+        </div>
+    </div>
+    <div class="install-section">
+            <h3>Install Aplikasi Ini</h3>
+            <p>Untuk pengalaman terbaik, install PWA ini di perangkat Anda!</p>
+            <button id="installBtn" style="display: none;" class="install-button">Install Aplikasi</button>
+            <p id="installStatus" class="status-message"></p>
+    </div>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                .then((registration) => {
+                    console.log('Service Worker registered sudah berhasil:', registration.scope);
+                })
+                .catch((error) => {
+                    console.error('Service Worker registration gagal:', error);
+                });
+            });
+        }
+
+        let deferredPrompt;
+        const installButton = document.getElementById('install-button');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (installButton) {
+                installButton.style.display = 'block';
+            }
+            console.log('👍 beforeinstallprompt event was fired.');
+        });
+
+        if (installButton) {
+            installButton.addEventListener('click', async () => {
+                installButton.style.display = 'none';
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log('User response to the install prompt: ${outcome}');
+                deferredPrompt = null;
+            });
+        }
+
+        window.addEventListener('appinstalled', () => {
+            if (installButton) {
+                installButton.style.display = 'none';
+            }
+            deferredPrompt = null;
+            console.log('PWA sudah terinstal');
+        });
+    </script>
+</body>
+</html>

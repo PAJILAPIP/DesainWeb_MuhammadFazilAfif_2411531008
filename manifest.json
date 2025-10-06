@@ -1,0 +1,17 @@
+{
+  "name": "Website Saya",
+  "short_name": "Web",
+  "start_url": "http://127.0.0.1:5500/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "description": "Progressive Web App untuk website portfolio pribadi dengan fitur offline",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
