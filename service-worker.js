@@ -49,16 +49,16 @@ self.addEventListener('fetch', (event) => {
           return response;
         }
 
-        // Clone request karena request adalah stream dan hanya bisa digunakan sekali
+        // Clone request
         const fetchRequest = event.request.clone();
 
         return fetch(fetchRequest).then((response) => {
-          // Cek apakah response valid
+          // Cek validitas: pastikan response berhasil (status 200) dan dari domain sendiri ('basic')
           if (!response || response.status !== 200 || response.type !== 'basic') {
             return response;
           }
 
-          // Clone response karena response adalah stream
+          // Clone response dan simpan ke cache
           const responseToCache = response.clone();
 
           caches.open(CACHE_NAME)
@@ -68,8 +68,15 @@ self.addEventListener('fetch', (event) => {
 
           return response;
         }).catch(() => {
-          // Jika fetch gagal dan tidak ada di cache, tampilkan offline page
-          return caches.match('./offline.html');
+          // >>> INI PERBAIKAN UTAMA: Cegah TypeError <<<
+          // Hanya kembalikan offline.html jika permintaan adalah navigasi (HTML)
+          if (event.request.mode === 'navigate') {
+            return caches.match('./offline.html');
+          }
+           
+          // Untuk aset (script, gambar, dll.) yang gagal, kembalikan Response kosong/gagal yang valid.
+          // Ini menyelesaikan 'Failed to convert value to Response'.
+          return new Response(null, { status: 404, statusText: 'Not Found' });
         });
       })
   );
