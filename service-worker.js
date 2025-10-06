@@ -44,33 +44,33 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-        // Cache hit - return response dari cache
+        // 1. Cache hit
         if (response) {
           return response;
         }
 
-        // Clone request karena request adalah stream dan hanya bisa digunakan sekali
-        const fetchRequest = event.request.clone();
-
-        return fetch(fetchRequest).then((response) => {
-          // Cek apakah response valid
-          if (!response || response.status !== 200 || response.type !== 'basic') {
+        // 2. Lakukan Fetch
+        return fetch(event.request.clone()) // Clone request
+          .then((response) => {
+            // Cek validitas dan simpan ke cache jika 'basic' (aset dari domain sendiri)
+            if (response && response.status === 200 && response.type === 'basic') {
+              const responseToCache = response.clone();
+              caches.open(CACHE_NAME).then((cache) => {
+                cache.put(event.request, responseToCache);
+              });
+            }
             return response;
-          }
-
-          // Clone response karena response adalah stream
-          const responseToCache = response.clone();
-
-          caches.open(CACHE_NAME)
-            .then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
-
-          return response;
-        }).catch(() => {
-          // Jika fetch gagal dan tidak ada di cache, tampilkan offline page
-          return caches.match('/offline.html');
-        });
+          })
+          .catch(() => {
+            // 3. PENANGANAN FALLBACK YANG BENAR
+            // Hanya kembalikan offline.html untuk permintaan halaman (navigasi)
+            if (event.request.mode === 'navigate') {
+              return caches.match('/offline.html'); // Pastikan ini jalur yang benar
+            }
+             // Untuk aset (script, gambar) yang gagal, kembalikan Response kegagalan
+             // INI MENCEGAH TypeError: Failed to convert value to 'Response'
+             return new Response(null, { status: 404, statusText: 'Not Found' });
+          });
       })
   );
 });
