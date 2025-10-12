@@ -1,11 +1,11 @@
 {
-  "name": "Website Saya",
+  "name": "Website Fazil",
   "short_name": "Web",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
-  "description": "Progressive Web App untuk website portfolio pribadi dengan fitur offline",
+  "description": "Progressive Web App untuk website pribadi dengan fitur offline",
   "orientation": "portrait-primary",
   "icons": [
     {
